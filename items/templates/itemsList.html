@@ -1,0 +1,92 @@
+{% include "header.html" %}
+<style>
+    .custab{
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 5% 0;
+        box-shadow: 3px 3px 2px #ccc;
+        transition: 0.5s;
+        }
+    .custab:hover{
+        box-shadow: 3px 3px 0px transparent;
+        transition: 0.5s;
+        }
+        
+</style>
+ 
+    <body>
+        <div class="container">
+            <div class="row col-md-10 col-md-offset-2">
+
+
+            <table class="table table-striped custab">
+            <thead>
+            <a href="/items/items_master/Save" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new</a>
+                <tr>
+                    <th>Brand Name</th>
+                    <th>Item Name</th>
+                    <th>Item Rate</th>
+                    <th class="text-center" colspan='2'>Action</th>
+                </tr>
+            </thead>
+                {% for value in itemsList %}
+                    <tr>
+                        <td>{{value.brand_name}}</td>
+                        <td>{{value.item_name}}</td>
+                        <td>{{value.rate}}</td>
+
+                        <td class="text-center"><a href="{{value.get_edit_url}}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span> &nbsp;Edit</a></td>
+                        <td class="text-center">
+                            <a data-target="#delModal{{ value.id }}"  data-toggle="modal" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> &nbsp;Delete</a> 
+                         
+                            <form class="form"  action="" method="POST" name="FORMNAME124" id="FORMNAME124" >	
+                                {% csrf_token %}		
+                                <!-- Modal Start -->			
+                                
+                                
+                                <div id="delModal{{ value.id }}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="background:#fa404c; color:#FFFFFF">
+                                                    <span class="modal-title" style="font-weight:bold">Delete Confirmation</span>
+                                                    <span class="close" data-dismiss="modal">&times;</span>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-responsive" width="100%">
+                                                        <tr>
+                                                            <td width="30%">Brand Name</td>
+                                                            <td>:</td>
+                                                            <td><strong>{{ value.brand_name }}</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="30%">Item Name</td>
+                                                            <td>:</td>
+                                                            <td><strong>{{ value.item_name }}</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="30%">Rate</td>
+                                                            <td>:</td>
+                                                            <td><strong>{{ value.rate }}</strong></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn  btn-danger" name="DelData"  type="submit" value=" {{ value.id }} ">Delete</button>
+                                                    <button type='button' class='btn btn-warning' data-dismiss='modal'>Close</button>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <!-- Modal End -->
+                            </form>
+                       
+                        </td> 
+                    </tr>
+                    
+                {% endfor %}   
+                    
+            </table>
+            </div>
+        </div>
+    </body>
+
