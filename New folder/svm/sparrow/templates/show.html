@@ -1,0 +1,17 @@
+<?php
+include 'connect.php';
+$p=$_POST['id'];
+$p=trim($p);
+$sql=" SELECT * FROM  registration where u_name='{$p}'";
+$result=mysqli_query($conn,$sql);
+while($row=mysqli_fetch_assoc($result)){
+    ?>
+    
+
+     echo $row['u_address'] ?>';
+    
+
+<?php
+}
+echo $sql;
+?>

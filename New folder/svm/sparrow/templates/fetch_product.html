@@ -1,0 +1,30 @@
+
+def ajax(request):
+
+
+<?php
+include "connect.php";
+if($_POST['type']=="")
+{
+    $sql="SELECT * FROM registration";
+    $query=mysqli_query($conn,$sql) or die("Query Unsuccessful.");
+    $str="";
+    while($res=mysqli_fetch_assoc($query)){
+        $str.="<option value='{$res['u_id']}'>{$res['u_name']}</option>";
+    }
+}
+    else  
+    {
+        if($_POST['type']=="statedata"){
+        $sql="SELECT * FROM registration WHERE u_id={$_POST['id']}";
+        $query=mysqli_query($conn,$sql) or die("Query Unsuccessful.");
+        $str="";
+        while($res=mysqli_fetch_assoc($query)){
+            $str.="<option value='{$res['u_id']}'>{$res['u_address']}</option>"; 
+    }
+}
+}
+echo $str;
+
+
+

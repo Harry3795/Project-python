@@ -1,0 +1,50 @@
+{% extends 'head.html' %}
+{% block title %}purchase list{% endblock title %}
+{% block body %}
+<h2 class="text-center">Purchase List</h2>
+<section style="background: #FFE4E1;">
+     <div class="container">
+      <button class="btn btn-primary mx-5" >
+        <a href="/form_purchase" class="text-light">Purchase/Buy</a>
+      </button>
+ 
+  </div>
+<div class="container mx-5">
+                <table class="table">
+                            <thead class="thead"style="background:red;">
+                               <tr>
+                                 <th scope="col">S.no</th>
+                                 <th scope="col">INVOICE NO</th>
+                                 <th scope="col">INVOICE DATE</th>
+                                 <th scope="col">RECEIPT NO(id+date)</th>
+                                 <th scope="col">RECEVING DATE(current)</th>
+                                 <th scope="col">SUPPLIER NAME</th>
+                                 <th scope="col">DETAILS</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                             
+                                                                                   
+                                          <tr>
+                                            <th scope="row"> </th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            
+                                            <td class="view">
+                                             <button type="submit" name="receipt" class="btn btn-primary" id="receipt">
+                                                                <a href="p_dtls/{{i.id}}" class="text-light"> view</a>
+                                                              </button> 
+                                            </td>
+                           
+                              
+                              
+                             </tbody>
+                            </table>
+    
+                </div>
+    
+</section>
+{% endblock body %}

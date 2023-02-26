@@ -1,0 +1,39 @@
+{% extends 'head.html' %}
+{% block title %}purchase details{% endblock title %}
+{% block body %}
+<h2 class="text-center"> Purchase details</h2>
+<section>
+    
+<div class="container mx-5">
+            <table class="table">
+                        <thead class="thead"style="background:green;">
+                           <tr>
+                             <th scope="col">S.no</th>
+                             <th scope="col">ITEM NAME</th>
+                             <th scope="col">PRICE</th>
+                            <th scope="col">QUANTITY</th>
+                            <th scope="col">TOTAL</th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                         
+                                                                               
+                                  echo '<tr>
+                                  <th scope="row"> '.$sn.' </th>
+                                  <td>'.$inv.'</td>
+                                  <td>'.$sname.'</td>
+                                  <td>'.$ad.'</td>
+                                  <td>'.$date.'</td>     
+                  
+                          
+                          
+                         </tbody>
+                        </table>
+
+            </div>
+
+           
+            
+        
+</section>
+{% endblock body %}

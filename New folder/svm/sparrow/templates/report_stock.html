@@ -1,0 +1,89 @@
+<?php
+include 'connect.php';
+include 'header.php';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="scripts/item.js"></script>
+        <script src="scripts/supplier.js"></script>
+        <script src="scripts/total.js"></script>
+        <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"
+        ></script>
+        <link rel="" type="" href="">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Document</title>
+</head>
+<body>
+<section style="background-color: #E5E4E2;">
+    <div> <h2 class="text-center">STOCK REPORT</h2>
+             <div class="container py-5">
+                        <div class="row">
+                       
+                        <div class="container mx-5">
+                            <table class="table">
+                                <thead  class="thead"style="background:#8FBC8F;">
+                                    <tr class="text-center">
+                                    <th>S.no</th>
+                                    <th>item Name</th>
+                                    <th>Purchase Qty</th>
+                                    <th>Sale Qty</th>
+                                    <th>Available Qty</th>
+                                    </tr>
+                                </thead>   
+                        <tbody>
+
+                        <?php
+                        include 'connect.php';
+                          // $sql="SELECT  distinct i.name, count(t.item_name)as total from item as i INNER JOIN temp t on i.id=t.item_name GROUP BY i.id";
+                            $sql="SELECT distinct i.item_name, sum(s.qty)as ptotal,sum(d.qty)as prc from items
+                            as i inner jOIN p_dtls d on i.id=d.sup_id  
+                             inner join sale_dtls as s on i.id=s.item_name GROUP BY i.id";
+
+                            $query=mysqli_query($conn,$sql);
+                                
+                                $sn=1;
+                                while($res=mysqli_fetch_array($query)){
+                                    $avqty=$res['ptotal']-$res['prc'];
+                                ?>
+                                <tr class="text-center">
+                                    <td style="background:#EDE275;"><?=$sn;?></td>
+                                    <td style="background:#64E986;"><?php echo $res['item_name'];?></td>   
+                                    <td style="background:#4AA02C;"><?php echo $res['ptotal'];?></td>
+                                    <td style="background:#FF8C00;"><?php echo $res['prc'];?></td>
+                                    <td style="background:#F62817;"><?php echo $avqty ?></td> 
+                                </tr>
+                            <?php
+                        $sn++;
+                        }
+                        ?>
+                        </tbody>
+
+
+
+
+
+                        </table>
+                                    </div>
+                                </div>
+                            </div>
+    </div>
+</section>
+    
+</body>
+</html>

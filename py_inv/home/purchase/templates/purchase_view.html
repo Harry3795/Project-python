@@ -1,0 +1,174 @@
+{% include "base.html" %}
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+<body>
+    <div class="container">
+        <div class="row col-md-10 col-md-offset-2 custyle">
+            <div class="card-body">
+                {{error_msg | safe}}
+              
+                <form name="form1"  method="POST" id="FORMNAME1" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% for p_list in master %}
+                    <div class="row" style="padding:10px;">
+                        <div class="col-lg-6">
+                            <div class="form-group"><label><strong><b>Invoice Number <i class="star"> *</i></b></strong></label></br>
+                                {{p_list.invoice_no}}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group"><label><strong><b>Invoice Date <i class="star"> *</i></b></strong></label></br>
+                                {{p_list.invoice_date}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding:10px;">
+                        <div class="col-lg-6">
+                            <div class="form-group"><label><strong><b>Supplier <i class="star"> </i></b></strong></label></br>
+                                {{p_list.supplier.supplier_name}}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group "><label><strong><b>Address <i class="star"> </i></b></strong></label></br>
+                                {{p_list.supplier.address}},{{p_list.supplier.city}} - {{p_list.supplier.pincode}}, {{p_list.supplier.state}}
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                {% endfor %}
+                <hr>
+                    
+                    <div class="row" style="padding:10px;">
+                        <div class="col-md-12 col-sm-12 col-xs-12" align="left">
+                            <table class="table table-striped custab form-group">
+                                <thead>
+                                    <tr>
+                                        <th>Item Name</th>
+                                        <th>Item Rate</th>
+                                        <th>Quantity</th>
+                                        <th>Total Amt.</th>
+                                    </tr>
+                                </thead>
+                                
+                                {% for data in readlist %}
+                                    <tbody id="tbody">
+                                        <tr>
+                                            <td>{{data.item.item_name}}</td>
+                                            <td>{{data.rate}}</td>
+                                            <td>{{data.qty}}</td>
+                                            <td>{{data.total}}</td>
+                                        </tr>
+                                    </tbody>
+                                {% endfor %}
+                                
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    <div class="row" style="padding:10px;">
+                        <div class="col-md-12 col-sm-12 col-xs-12" align="left">
+                            
+                            <a href="/purchase/purchase_list/"><span class="btn btn-info"><i class="material-icons" data-toggle="tooltip" data-original-title="{{ButtonBack}}">Back</i></span></a></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+   
+    function getSupplier_data()
+    {	
+        $("#div_supplier_details").html("");
+        var supplier_id=document.getElementById("id_supplier_id").value;
+        //alert(supplier_id);
+        $.ajax({
+            type: 'POST',
+            url: "/purchase/getSupplier_details/",
+            data: { 'supplier_id' : supplier_id,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            
+            success: function(res)
+            { 
+                var data = JSON.parse(res);
+                //console.log(data);
+                //alert(data);
+                document.getElementById("div_supplier_details").innerHTML = data.address + ", " + data.city + " - " + data.pincode+ "," + data.state;
+            }
+            
+        });
+   
+    }
+
+    function getItems_data()
+    {	      
+        var item_id=document.getElementById("id_item_id").value;
+        //alert(item_id);
+        $.ajax({
+            type: 'POST',
+            url: "/purchase/getItems_details/",
+            data: { 'item_id' : item_id,'csrfmiddlewaretoken': '{{ csrf_token }}'},           
+            success: function(res)
+            { 
+                var data = JSON.parse(res);
+                //document.getElementById("id_rate").innerHTML = data.rate ;
+                $("#id_rate").val(data.rate.toFixed(2));
+            }          
+        });  
+    }
+
+
+    function isNumber(evt) {
+        //alert();
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+    $( document ).ready(function() {
+        //console.log( "ready!" );
+        $('#id_qty').keyup(function(){
+            var qyantity =  $("#id_qty").val();
+            var rate =  $("#id_rate").val();
+            var total = qyantity * rate;
+            $("#id_total").val(total);	
+    
+        });
+        
+        $('#id_invoice_date').datepicker({ 
+            startDate: '',
+            autoclose: true,
+            format: 'dd-mm-yyyy'
+	    });
+
+    });
+    
+    
+    function calculate()
+    {
+        //alert();
+        var qty=0,rate=0,total=0;
+                 
+        qty=parseInt($(this).find("#id_qty").val()==''?0:$(this).find("#id_qty").val());
+        rate=parseInt($(this).find("#id_rate").val()==''?0:$(this).find("#id_rate").val());
+        
+        qty = isNaN(qty) ? 0 : qty;
+        rate = isNaN(rate) ? 0 : rate;	
+        
+        qty_price=qty*rate;	
+        total=parseInt(qty_price).toFixed(2);
+        
+        $("#id_total").val(total);
+        
+    } 
+
+    
+    </script>

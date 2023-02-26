@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block tittle %}
+Insert Item
+
+{% endblock tittle %}
+{% block body %}
+
+<div class="conatiner">
+    <div class="col-md-10 offset-md-1 mt-5">
+        <h3 class="alert alert-info">Insert Item Details</h3>
+        <div class="row">
+          <div class="col-sm-4">
+            <form action="" method="POST" aria-autocomplete="off">
+                {% csrf_token %}
+                
+                    {{form.itemname}}
+                    {{form.rate}}
+                    {{form.brand}}
+
+                    {% comment %} {{form.as_p}} {% endcomment %}
+                
+                
+                
+                 <input type="submit" value="ADD ITEM" name="save" id="save" class="btn btn-success">
+            
+            </form>
+            
+          </div>
+
+        </div>
+       
+    </div>
+</div>    
+
+{% endblock body %}

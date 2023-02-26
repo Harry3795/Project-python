@@ -1,0 +1,52 @@
+
+{% extends 'head.html' %}
+{% block title %}
+| supplier fill dtls
+{% endblock title %}
+{% block body %}
+
+
+    <div class="head1" style="color:blue;">
+        <h2> YOUR DETAILS IS HERE</h2>
+    </div><div class="head">
+
+    </div>
+    <div class="container">
+        <button class="btn btn-primary my-5" >
+          <a href="/supplier" class="text-light">back</a>
+        </button>
+        <label for="datetime">
+            <input name="datetime" id="date" type="date" value="" class="form-control"> 
+         </label>
+           
+    </div>
+     <div class="container">
+           <form action="/supp_add" method="POST" id="forminsert1">
+            {% csrf_token %}
+               <div class="mb-3 form-check">
+                   <label for="item1" class="form-label">supplier name</label>
+                  <input name="sname" id="sname" type="text" value="" class="form-control" aria-describedby="sname">
+                </div>
+             <div class="mb-3 form-check">
+                <label for="email" class="form-label">email</label>
+                <input name="semail" id="semail" type="email" value="" class="form-control" >
+              </div>
+             <div class="mb-3 form-check">
+                 <label class="mob" for="mobile">mobile</label>
+                     <input name="smob" id="smob"  type="number" value="" class="form-control" >
+            </div>
+             <div class="mb-3 form-check">
+                 <label class="mob" for="Address">Address</label>
+                     <input name="sadd" id="sadd"  type="text" value="" class="form-control" >
+            </div>
+             <div class="mb-3 form-check">
+                 <label class="mob" for="Address">Date</label>
+                     <input name="sdate" id="sdate"  type="date" value="" class="form-control" >
+            </div>
+            <div class="text-center">
+                 <button type="submit"  name="submit"  id="submit" class="btn btn-success" value="SAVE DETAILS">
+                    SAVE DETAILS</button>
+            </div>
+         </form>
+    </div>
+{% endblock body %}%}

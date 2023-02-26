@@ -1,0 +1,281 @@
+<?php
+include 'connect.php';
+include 'header.php';
+?>  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sale</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="" type="" href="">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
+<section style="background:cyan;">
+    <div class="container py-5">
+    <div class="row m-auto">
+            <div class="col-sm-3">
+                <div class="form-group">
+                <label for="" class=" text-sm mb-2">Transfer No:</label>
+                    <input type="text" placeholder="Transfer Number" name="t_num" id="t_num" class="form-control mb-2">
+                </div>
+            </div>
+            <div class="col-mb-3">
+                <div class="form-group">
+                <label for="" class="mb-2">Transfer Date:</label>
+                    <input type="date" placeholder="date" name="tdate" id="tdate" class="form-control mb-2">
+                </div>
+            </div><br>
+
+    </div>        <br>
+          
+            <div class="col-sm-5">
+                <!-- <div class="form-group"> -->
+                    <label calss="mb-2">Customer Name : </label>
+                    <input type="text" placeholder="Customer Name:Mr Pradeep kumar" name="cname" id="cname" class="form-control mb-2">
+                </div>
+            </div>
+            
+        </div>
+</section>
+        <!-- ----------------------------item select for sale degien------------------------------- -->
+<section style="background:gray;">
+
+<div class="row mx-5">
+           <div class="col-md-2">
+           <div class="form-group">
+                <label for="" class=" text-sm mb-2">Item</label>
+                <select class="form-control" id="item" name="item_name" >
+                        <option value="">Select Item</option>
+                     </select>
+                </div>
+           </div>
+           <div class="col-md-2">
+           <div class="form-group">
+                <label for="" class=" text-sm mb-2">Rate</label>
+                <select class="form-control" id="rate" name="rate"  placeholder="Price" onclick="multiply1();"  readonly>
+             
+                        <option  value=""></option>
+                        
+                     </select>
+                </div>
+           </div>
+           
+           <div class="col-md-2">
+           <div class="form-group">
+                <label for="" class=" text-sm mb-2">Quantity</label>
+                    <input type="number" placeholder="Quantity"  id="qty"  name="qty" min="0" onclick="multiply1();" value="0" class="form-control mb-2" >
+                </div>
+           </div>
+           <div class="col-md-2">
+           <div class="form-group">
+                <label for="" class=" text-sm mb-2">total</label>
+                <input class="form-control" type="text" name="total" id="total" value="0" readonly>
+                </div>
+           </div>
+           <div class="col-md-2">
+           <div class="form-group">
+              <input type="submit" name="add" id="add" class="btn btn-primary " value="Add"  >
+                </div>
+           </div>
+          
+      </div>  
+      <div>
+
+                             
+  
+   
+ </section>
+ <section style="background:cyan;">
+ <div class="container mx-5">
+            <table class="table">
+                        <thead class="thead"style="background:voilet;">
+                           <tr>
+                             <th scope="col">S.no</th>
+                             <th scope="col">Item_name</th>
+                             <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                           <?php
+                             $sql = "SELECT  p_dtls.item_name,sale_temp.rate,sale_temp.qty,sale_temp.total
+                             FROM sale_temp
+                             INNER JOIN p_dtls ON sale_temp.item_name=p_dtls.id;";
+                            // $sql="SELECT * FROM sale_temp";
+                             $result = mysqli_query($conn, $sql);
+                             if($result==true){
+                               
+                                    $sn=1;
+                                  while($row=mysqli_fetch_assoc($result)){
+                                                                     
+                                        $item_name=$row['item_name'];
+                                        $rate=$row['rate'];
+                                        $qty=$row['qty'];
+                                        $total=$row['total'];
+                                                                       
+                                        echo '<tr>
+                                        <th scope="row"> '.$sn.' </th>
+                                        <td>'.$item_name.'</td>
+                                        <td>'.$rate.'</td>
+                                        <td>'.$qty.'</td>
+                                        <td>'.$total.'</td>     
+                                        ';$sn++; 
+                       
+                            
+                              } 
+                                                           
+                            }
+                                                      
+                           ?>
+                          
+                          
+                         </tbody>
+                        </table>
+
+            </div>
+        <div class="sale" id="sale">
+                <div class="text-center " id="save">
+            <button type="submit" name="save" id="save" class="btn btn-primary" onclick="saved()">save</button>
+            </div>
+                <div class="text-right ">
+            <button type="submit" name="sale" id="sale" class="btn btn-success" onclick="saved();"> <a href="item_master.php" class="text-light">PROCESS TO SALE ITEM</a> PROCESS TO SALE ITEM</button>   
+                            
+        </div>
+    </div>
+        
+      </div>   
+
+</section>
+</form>
+
+
+ <?php
+// -----------------------------for  inserting  in temp sale data and  add button code---------------------------------
+ include 'connect.php';
+ if(isset($_POST['add'])){
+//   $id=$_POST['id'];
+  $t_num=$_POST['t_num'];
+  $tdate=$_POST['tdate'];
+  $cname=$_POST['cname'];
+  $item_name=$_POST['item_name'];
+  $rate=$_POST['rate'];
+  $qty=$_POST['qty'];
+  $total=$_POST['total'];
+  
+       
+  $sql = "INSERT INTO `sale_temp` (`t_num`,`tdate`,`cname`,`item_name`, `rate`, `qty`,`total`) 
+                      VALUES ('$t_num','$tdate','$cname','$item_name','$rate', $qty,'$total')";
+           
+                $result=(mysqli_query($conn,$sql));
+            if($result==true){
+            
+
+            }
+         
+}
+  ?>
+<?php
+include 'connect.php';
+
+if(isset($_POST['sale'])){
+
+                
+  $sql="DELETE FROM sale_temp";
+
+  $result=mysqli_multi_query($conn,$sql);
+
+  if($result==true){
+        // header("location:report.php");
+  }
+}
+     
+        
+
+ ?>
+ <?php
+include 'connect.php';
+
+if(isset($_POST['save'])){
+     
+            $sql="INSERT INTO sale_dtls(SELECT * FROM sale_temp)";
+
+            $result=(mysqli_query($conn,$sql));
+            if($result){
+
+            }
+            else{
+              echo 'Something went wrong';
+            }
+            }
+ ?>
+    
+
+
+<!------------------------------------multiplication------------------------------------------->
+<script>
+function multiply1() {
+    var one =  document.getElementById("rate").value;
+     var two =  document.getElementById("qty").value;
+  var total= one*two;
+    document.getElementById("total").value = one*two;
+}
+           
+</script>
+<!-- ---------------------------ajax script for  select item name and automatically comes price -->
+<script>
+    $(document).ready(function(){
+        function loaddata(type,address){
+                $.ajax({
+                            
+                        url: "fetch_sale.php",
+                        type: "POST",
+                        data:{
+                            type : type ,
+                            id : address
+                              },
+                    success:function(data){
+                            if(type=="statedata"){
+                             $('#rate').html(data);
+                             }else{
+                            $('#item').append(data);
+                      }
+                    }
+                });
+          }
+                loaddata();
+
+              $("#item").on("change",function(){
+               var sale = $("#item").val();
+              loaddata("statedata",sale)
+            })
+
+    });
+</script>    
+<script>
+    function saved() {
+  
+  alert("DATA save Succefully  please  sale again ");
+}
+</script>
+  
+</body>
+</html>

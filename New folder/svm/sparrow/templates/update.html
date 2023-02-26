@@ -1,0 +1,80 @@
+{% extends 'head.html' %}
+{% block title %}update form {% endblock title %}ck
+
+
+{% block body %}
+    <div class="head1" style="color:blue;">
+        <h2> YOUR DETAILS IS HERE</h2>
+    </div><div class="head">
+    <div class="container">
+        <button class="btn btn-primary my-5" >
+          <a href="/list_item" class="text-light">back</a>
+        </button>
+    </div>
+      
+     <div class="container">
+        {% if update %}
+
+        <form action="{% url 'update_item' update.id %}" method="POST" id="update1">
+            {% csrf_token %}
+            
+               <div class="mb-3 form-check">
+                   <label for="item1" class="form-label">Item Name details</label>
+                  <input name="itemname" id="itemname" type="text" value="{{update.itemname}}" class="form-control"  aria-describedby="itemname" >
+                </div>
+             <div class="mb-3 form-check">
+                <label for="item2" class="form-label">Price</label>
+                <input name="rate" id="rate" type="text" value="{{update.rate}}" class="form-control" >
+              </div>
+             <div class="mb-3 form-check">
+                 <label class="brand1" for="brand">Brand</label>
+                     <input name="brand" id="brand"  type="text" value="{{update.brand}}" class="form-control">
+            </div>
+             <div class="mb-3 form-check">
+                 <label class="brand1" for="date">Date</label>
+                     <input name="date" id="date"  type="datetime" value="{{update.date|date:'Y-m-d'}}" class="form-control" >
+            </div>
+            <div class="text-center">
+                 <button name="update"  id="submit" type="submit" class="btn btn-success" value="UPDATE">
+                     UPDATE</button>
+            </div>
+          
+         </form>
+        {% else %}
+        
+           <form action="/list_item" method="POST" id="update1">
+            {% csrf_token %}
+            
+               <div class="mb-3 form-check">
+                   <label for="item1" class="form-label">Item Name details</label>
+                  <input name="itemname" id="itemname" type="text" value="" class="form-control"  aria-describedby="itemname" >
+                </div>
+             <div class="mb-3 form-check">
+                <label for="item2" class="form-label">Price</label>
+                <input name="rate" id="rate" type="text" value="" class="form-control" >
+              </div>
+             <div class="mb-3 form-check">
+                 <label class="brand1" for="brand">Brand</label>
+                     <input name="brand" id="brand"  type="text" value="" class="form-control">
+            </div>
+             <div class="mb-3 form-check">
+                 <label class="brand1" for="date">Date</label>
+                     <input name="date" id="date"  type="datetime" value="" class="form-control" >
+            </div>
+            <div class="text-center">
+                 <button name="update"  id="submit" type="submit" class="btn btn-success" value="UPDATE">
+                     UPDATE</button>
+            </div>
+          
+         </form>
+         {% endif %}
+         
+    </div>
+
+ {% endblock body %}
+<script>
+    $('#update1').on('submit',function(){
+    alert('Your Data is succesfully updated')
+    
+   });
+</script>

@@ -1,0 +1,26 @@
+<?php
+
+
+include 'connect.php';
+
+if(isset($_POST['purchase'])){
+
+        $invoice=$_POST['invoice'];
+        $s_name=$_POST['s_name'];
+        $s_address=$_POST['s_address'];
+        $s_date=$_POST['s_date'];
+        
+                
+      
+        $sql= "INSERT INTO p_master (invoice,s_name,s_address,s_date) 
+                     VALUES ('$invoice','$s_name', '$s_address','$s_date')";
+           
+            $result=mysqli_query($conn,$sql);
+      
+            if($result){
+                
+      }
+          
+        
+}
+ ?>

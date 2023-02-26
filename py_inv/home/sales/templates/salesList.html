@@ -1,0 +1,33 @@
+{% include "base.html" %}
+
+ 
+<body>
+    <div class="container">
+        <div class="row col-md-10 col-md-offset-2">
+            <table class="table table-striped custab">
+                <thead>
+                    <a href="/sales/sales_master/Save" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new</a>
+                    <tr>
+                        <th>Sales No</th>
+                        <th>Sales Date</th>
+                        <th>Customer Name</th>
+                        <th>Customer Address</th>
+                        <th class="text-center" colspan='2'>Action</th>
+                    </tr>
+                </thead>
+                {% for val in saleslist %}
+                <tr>
+                    <td>{{val.sales_no}}</td>
+                    <td>{{val.sales_date}}</td>
+                    <td>{{val.customer_name}}</td>
+                    <td>{{val.address}}</td>
+                    <td class="text-center"><a href="{{val.get_read_url}}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-eye-open"></span> &nbsp;View</a></td>
+                    
+                </tr>
+                {% endfor%}
+            </table>
+        </div>
+    </div>
+</body>
+
+

@@ -1,0 +1,31 @@
+{% include "base.html" %}
+
+ 
+<body>
+    <div class="container">
+        <div class="row col-md-10 col-md-offset-2">
+            <table class="table table-striped custab">
+                <thead>
+                    <a href="/purchase/purchase_master/Save" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new</a>
+                    <tr>
+                        <th>Invoice No</th>
+                        <th>Invoice Date</th>
+                        <th>Supplier Name</th>
+                        <th class="text-center" >Action</th>
+                    </tr>
+                </thead>
+                {% for value in purchaselist %}
+                <tr>
+                    <td>{{value.invoice_no}}</td>
+                    <td>{{value.invoice_date}}</td>
+                    <td>{{value.supplier_name}}</td>
+                    
+                    <td class="text-center"><a href="{{value.get_read_url}}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-eye-open"></span> &nbsp;View</a></td>
+                    </td> 
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+

@@ -1,0 +1,75 @@
+
+{% extends 'head.html' %}
+{% block title %}
+| list item form
+{% endblock title %}
+{% block body %}
+  <body>
+    <div class="container" style="color:blue;">
+        <h2>ITEM MASTER LIST</h2>
+    </div>
+    <div class="container">
+    
+        <button class="btn btn-primary my-2" >
+          <a href="/p_form" class="text-light">ADD ITEM</a>
+        </button>
+      </div >
+    
+            <div class="container mb-4">
+            <table class="table">
+                        <thead class="thead"style="background:blue;">
+                  <tr>
+                    <th scope="col">S.no</th>
+                    <th scope="col">Item id</th>
+                  <th scope="col">Item name</th>
+                  <th scope="col">Rate</th>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Date</th>
+                  <th colspan="2">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    
+                  {% for i in  item %}
+                   
+                          <tr>
+                              <th scope="row">{{forloop.counter}}</th>
+                              <td>{{i.id}}</td>
+                              <td>{{i.itemname}}</td>
+                              <td>{{i.rate}}</td>
+                              <td>{{i.brand}}</td>
+                              <td>{{i.date}}</td>
+                              {% comment %} <td>{{i.date|date:'Y-m-d'}}</td> {% endcomment %}
+                              
+                            
+          
+                              
+                              <td class="view">
+                                    <button type="submit" name="view" class="btn btn-primary" id="submit">
+                                                      <a href="views/{{i.id}}" class="text-light"> view</a>
+                                                    </button> 
+                                
+                              
+                                    <button type="submit" name="update" class="btn btn-success" id="submit">
+                                                          <a href="update/{{i.id}}"  class="text-light">update</a>
+                                                        </button> 
+                                
+                              
+                                    <button type="submit" name="delete" class="btn btn-danger" id="submit">
+                                                        <a href="delete/{{i.id}}"  class="text-light"> delete</a>
+                                                      </button> 
+                              </td>
+                
+                            </tr>
+                    
+                    {% endfor %}   
+                                  
+                            
+                                                          
+                 
+                </tbody>
+           </table>
+  </div>
+    
+  </body>
+  {% endblock body %}
