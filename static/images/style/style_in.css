@@ -1,0 +1,40 @@
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+.form-check-input {
+    position: absolute;
+    margin-top: form-check-input-margin-y;
+    margin-left: form-check-input-gutter;
+} 
+.head1{
+    background-color: rgb(160, 168, 204);
+    color: blue;
+} 
+.table.thead{
+    background:blue;
+}
+.move-right{
+    position: absolute;
+     right: 300px;
+}
+/* .move-left{
+    position: absolute;
+     left: 200px;
+} */
+.form-horizontal { 
+    position: relative;
+ }
+
+
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}

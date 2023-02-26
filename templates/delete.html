@@ -1,0 +1,68 @@
+{% extends 'head.html' %}
+{% block title %}
+| views form
+{% endblock title %}
+
+{% block body %}
+<div class="head1" style="color:blue;">
+        <h2> YOUR DETAILS IS HERE</h2>
+    </div><div class="head">
+    <div class="container">
+        <button class="btn btn-primary my-5" >
+          <a href="/list_item" class="text-light">back</a>
+        </button>
+     <div class="container">
+            {% if delete %}
+            <form action="{% url 'delete_item' delete.id %}" method="POST" id="forminsert1">
+                {% csrf_token %}
+                   <div class="mb-3 form-check">
+                       <label for="item1" class="form-label">Item Name details</label>
+                      <input name="itemname" id="itemname" type="text" value="{{delete.itemname}}" class="form-control" id="itemname" aria-describedby="itemname" readonly>
+                    </div>
+                 <div class="mb-3 form-check">
+                    <label for="item2" class="form-label">Price</label>
+                    <input name="rate" id="rate" type="text" value="{{delete.rate}}" class="form-control"  readonly>
+                  </div>
+                 <div class="mb-3 form-check">
+                     <label class="brand1" for="brand">Brand</label>
+                         <input name="brand" id="brand"  type="text" value="{{delete.brand}}" class="form-control"readonly>
+                </div>
+                
+                 <div class="mb-3 form-check">
+                     <label class="date1" for="time">Date of Entery</label>
+                         <input name="date" id="date1"  type="datetime" value="{{delete.date}}" class="form-control"  readonly>
+                </div>
+                <div class="text-center">
+                     <button name="delete"  id="submit" type="submit" class="btn btn-success" value="delete">Delete
+                        </button>
+                </div>
+             </form>
+
+            {% else %}
+           <form action="{% url 'delete_item' delete.id %}" method="POST" id="forminsert1">
+            {% csrf_token %}
+               <div class="mb-3 form-check">
+                   <label for="item1" class="form-label">Item Name details</label>
+                  <input name="itemname" id="itemname" type="text" value="" class="form-control" id="itemname" aria-describedby="itemname" readonly>
+                </div>
+             <div class="mb-3 form-check">
+                <label for="item2" class="form-label">Price</label>
+                <input name="rate" id="rate" type="text" value="" class="form-control"  readonly>
+              </div>
+             <div class="mb-3 form-check">
+                 <label class="brand1" for="brand">Brand</label>
+                     <input name="brand" id="brand"  type="text" value="" class="form-control"readonly>
+            </div>
+            
+             <div class="mb-3 form-check">
+                 <label class="date1" for="time">Date of Entery</label>
+                     <input name="date" id="date1"  type="datetime" value="" class="form-control"  readonly>
+            </div>
+            <div class="text-center">
+                 <button name="delete"  id="submit" type="submit" class="btn btn-success" value="delete">Delete
+                    </button>
+            </div>
+         </form>
+         {% endif %}
+    </div>
+{% endblock body %}

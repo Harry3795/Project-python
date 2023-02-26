@@ -1,0 +1,65 @@
+
+{% extends 'head.html' %}
+{% block title %}purchase item{% endblock title %}
+{% block body %}
+        {% comment %} include 'connect.php';
+        if(isset($_POST['submit'])){
+
+            $item_name=$_POST['item_name'];
+            $rate=$_POST['rate'];
+            $brand=$_POST['brand'];
+            $datetime=$_POST['datetime'];
+            
+            // $status=$_POST['status'];
+                
+            $sql = "INSERT INTO `items` (`item_name`, `rate`, `brand`,`datetime`) 
+                                VALUES ('$item_name', $rate,'$brand',now())";
+            
+            $result=mysqli_query($conn,$sql);
+            
+            if($result==true){
+                header('location:list_item.php');  
+            }
+            }
+        ?>  {% endcomment %}
+
+<body>
+    <div class="head1" style="color:blue;">
+        <h2> YOUR DETAILS IS HERE</h2>
+    </div><div class="head">
+
+    </div>
+    <div class="container">
+        <button class="btn btn-primary my-5" >
+          <a href="/list_item" class="text-light">back</a>
+        </button>
+   
+    </div>
+    {% comment %} ----------add item details---- {% endcomment %}
+     <div class="container">
+           <form action="/p_form" method="POST" id="form_insert_item">
+            {% csrf_token %}
+               <div class="mb-3 form-check">
+                   <label for="item1" class="form-label">Item Name Details</label>
+                  <input name="itemname" id="itemname" type="text" value="" class="form-control" aria-describedby="itemname">
+                </div>
+             <div class="mb-3 form-check">
+                <label for="item2" class="form-label">Price</label>
+                <input name="rate" id="rate" type="text" value="" class="form-control" id="Rate">
+              </div>
+             <div class="mb-3 form-check">
+                 <label class="brand1" for="brand">Brand</label>
+                     <input name="brand" id="brand"  type="text" value="" class="form-control" id="brand">
+            </div>
+            <div class="text-center">
+                 <button name="submit"  id="submit" type="submit" class="btn btn-success" value="SAVE DETAILS">
+                    SAVE DETAILS</button>
+                 </div>
+
+              
+         </div>
+
+         </form>
+    </div>
+
+{% endblock body %}

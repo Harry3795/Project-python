@@ -1,0 +1,54 @@
+
+{% extends 'head.html' %}
+{% block title %}
+| login
+{% endblock title %}
+{% block body %}
+<div class="container" style="color:blue;">
+        <h2>Supplier Details</h2>
+        <div class="container">
+          <button class="btn btn-primary my-5" >
+            <a href="/supp_add" class="text-light">Add supplier</a>
+          </button>
+      
+      </div>
+    </div>
+    
+            <div class="container mx-5">
+            <table class="table">
+                <thead class="thead"style="background:blue;">
+                    <tr>
+                      <th scope="col">S.no</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Mobile</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Date of registration</th>
+                    <!-- <th colspan="2">Action</th> -->
+                    </tr>
+                </thead>
+                  <tbody>  
+                    {% for i in sdtls %}                                                                                                  
+                      <tr>
+                        <th scope="row"> {{forloop.counter }}</th>
+                        <td>{{i.sname}}</td>
+                        <td>{{i.semail}}l</td>
+                        <td>{{i.smob}}</td>
+                        <td>{{i.sadd}}</td>
+                        <td>{{i.sdate}}</td>
+                      </tr>
+                    {% endfor %}    
+                  </tbody>
+                 </table>
+
+                        
+    
+            </div>
+            <div class="container-fluid mx-right">
+
+                <button class="btn btn-primary my-2" >
+                <a href="/list_item" class="text-light">View items</a>
+                </button>
+            </div>
+
+{% endblock body %}

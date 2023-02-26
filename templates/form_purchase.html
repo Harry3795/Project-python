@@ -1,0 +1,278 @@
+{% extends 'head.html' %}
+{% block title %}purchase details{% endblock title %}
+
+{% block body %}
+{% comment %} <!-- ------------------------------------head  invoice,date and supplier name ------------------- --> {% endcomment %}
+<section style="background-color: #BDEDFF;">
+  <form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
+    {% csrf_token %}
+    <h2 class="text-center"> Purchase here</h2>
+    <section>
+      <!-- <form action="" method="POST"  enctype="multipart/form-data" autocomplete="off"> -->
+      <div class="row m-auto">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="" class=" text-sm mb-2">Invoice Number:</label>
+            <input type="text" value="" placeholder="Ex:-1234567" id="inv" name="invoice" class="form-control mb-2">
+
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="" class=" text-sm mb-2">Date</label>
+            <input class="form-control" type="datetime" name="invoicedate" id="invoicedate">
+          </div>
+        </div>
+      </div>
+      <div class="row m-auto">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="" class=" text-sm mb-2">Supplier name</label>
+            <select class="form-control" id="sname" name="sname" placeholder="">SELECT
+              {% for i in supplier  %}
+              <option value="">{{i.sname}}</option>
+
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="" class=" text-sm mb-2">Supplier Address :-</label>
+            <select class="form-control" name="sadd" id="sadd" readonly>
+
+              <option value=""></option>
+            </select>
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+    <section style="background-color: #ADD8E6;">
+
+      <div class="row m-auto">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="" class=" text-sm mb-2">Item</label>
+            <select class="form-control" id="itemname" name="itemname">
+              {% for i in p_form %}
+              <option value="{{i.itemname}}">{{i.itemname}}</option>
+              {% endfor %}
+
+
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="" class=" text-sm mb-2">Rate</label>
+            <select class="form-control" id="rate" name="rate" placeholder="Price" onchange="multiply();">
+            {% comment %} <input type="text" placeholder="rate" id="rate" name="rate"  onchange="multiply();" class="form-control mb-2"> {% endcomment %}
+
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="" class=" text-sm mb-2">Quantity</label>
+            <input type="number" placeholder="Quantity" id="qty" name="qty" min="0" onchange="multiply();" value="0"
+              class="form-control mb-2">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="" class=" text-sm mb-2">total</label>
+            <input class="form-control" type="text" name="total" id="total" value="0" readonly>
+          </div>
+        </div>
+
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="submit" name="add" id="add" class="btn btn-primary " value="Add" onclick="added();">
+          </div>
+        </div>
+
+      </div>
+
+
+    </section>
+   
+
+
+    <div class="container mx-5" id="dis-table">
+      <table class="table">
+        <thead class="thead" style="background:;">
+          <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Item_name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Qunatity</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+         
+          {% for i in ptemp  %}              
+                                                  
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.itemname}}</td>
+                    <td>{{i.rate}}</td>
+                    <td>{{i.qty}}</td>
+                    <td>{{i.total}}</td>     
+                  </tr>
+           {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+    <div>
+      <div class="text-center " id="save">
+        <button type="submit" name="save" id="save" class="btn btn-primary">save</button>
+      </div>
+    
+    </div>
+
+  </form>
+
+  <!-- --------------------------------------------AJAX FOR  GET SUPPLIER ADDRESS-------------------- -->
+  <script>
+    $(document).on('click',function(e){
+        e.preventDefault();
+        console.log("DATA IS CHANGED")
+        var itm=$('#itemname').val();
+        var rt=$('#rate').val();
+        if (itm==""){
+          console.log("please Enter itemname")
+        }else if (rt==""){
+          console.log("rate is not selected or define")
+        }else {
+
+          //console.log(itm)
+          //console.log(rt)
+          mydata={itemname=itm,rate=rt}
+          $.ajax({
+            type: "POST",
+            url: "{% url 'fetchsupp_add' %}",
+            data: "mydata",
+            dataType: "dataType",
+            success: function (data) {
+              console.log.apply(data); 
+            }
+          });
+        }
+
+    
+
+
+
+  </script>
+  
+  {% comment %} 
+  <script>
+    $(document).on(function () {
+      function loaddata(type, address) {
+        $.ajax({
+
+          url: "fetch_product.html",
+          type: "POST",
+          data: {
+            type: type,
+            id: address
+          },
+          success: function (data) {
+            if (type == "statedata") {
+              $('#sadd').html(data);
+            } else {
+              $('#sadd').append(data);
+            }
+          }
+        });
+      }
+      loaddata();
+
+      $("#sname").on("change", function () {
+        var supplier = $("#sname").val();
+        loaddata("statedata", supplier)
+      })
+
+    });
+  </script> 
+  
+  {% endcomment %}
+
+
+
+  <!-- ---------------------------ajax script for  select item name and automatically comes price -->
+  <script>
+    $(document).ready(function () {
+      function loaddata(type, address) {
+        $.ajax({
+
+          url: "fetch_price.php",
+          type: "POST",
+          data: {
+            type: type,
+            id: address
+          },
+          success: function (data) {
+            if (type == "statedata") {
+              $('#rate').html(data);
+            } else {
+              $('#item').append(data);
+            }
+          }
+        });
+      }
+      loaddata();
+
+      $("#item").on("change", function () {
+        var supplier = $("#item").val();
+        loaddata("statedata", supplier)
+      })
+
+    });
+  </script>
+  {% comment %} <!------------------------------------multiplication-------------------------------------------> {% endcomment %}
+<script>
+    function multiply() {
+      var one = document.getElementById("rate").value;
+      var two = document.getElementById("qty").value;
+      var total = one * two;
+      document.getElementById("total").value = one * two;
+    }
+
+  </script>
+  <script>
+    function saved() {
+
+      alert("DATA save Succefully \n click to 'Process to purchase'");
+    }
+  </script>
+  <script>
+    function drafed() {
+
+      alert("DATA save Succefully \n Select items to purchase and SAVE");
+    }
+  </script> 
+
+      <script>
+    // $(document).ready(function(){
+    //     $('#save').on("click",function(){
+    //     $('#hide').hide();
+    //    });
+    // });
+      </script>
+
+
+
+  
+{% endblock body %}

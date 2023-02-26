@@ -1,0 +1,37 @@
+<?php
+include "connect.php";
+if($_POST['type']=="")
+{
+
+//     $query ="(SELECT * FROM enterprises WHERE name like '"
+//     .$_POST["keyword"]. "%' ORDER BY name) UNION (SELECT * FROM category WHERE name LIKE '"  
+//     .$_POST["keyword"]. "%' ORDER BY name)";
+//     SELECT City FROM Customers
+// UNION
+// SELECT City FROM Suppliers
+// ORDER BY City;
+
+
+
+    $sql="SELECT * FROM p_dtls where status=1 UNION SELECT * FROM items ORDER BY id ;";
+    $query=mysqli_query($conn,$sql) or die("Query Unsuccessful.");
+    $str="";
+    while($res=mysqli_fetch_assoc($query)){
+        $str.="<option  value='{$res['id']}'>{$res['item_name']}</option>";
+        
+    }
+}
+    else 
+    {
+        if($_POST['type']=="statedata"){
+        $sql="SELECT * FROM p_dtls WHERE id={$_POST['id']}";
+        $query=mysqli_query($conn,$sql) or die("Query Unsuccessful.");
+        $str="";
+        while($res=mysqli_fetch_assoc($query)){
+            $str.="<option  value='{$res['rate']}'>{$res['rate']}</option>"; 
+    }
+}
+}
+echo $str;
+
+?>
