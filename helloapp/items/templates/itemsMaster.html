@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Inventry| New Items </title>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    </head>
+    <style type="text/css">
+       
+    </style>
+    
+    {% include "header.html" %}
+    <body>
+        <div class="container">
+            <div class="row col-md-10 col-md-offset-2 custyle">
+                <div class="card-body">
+                    {{error_msg }}
+                  
+                    <form name="form1"  method="POST" id="FORMNAME1">
+                    {% csrf_token %}
+                    
+                        <div class="row" style="padding:10px;">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label id="{{forms.brand_name.id_for_label}}"> <b>{{forms.brand_name.label}}<i class="star"> *</i></b> </label></br>
+                                    {{forms.brand_name}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group"><label><strong><b>Item Name <i class="star"> *</i></b></strong></label>
+                                    {{forms.item_name}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group"><label><strong><b>Rate <i class="star"> *</i></b></strong></label>
+                                    {{forms.rate}}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 col-sm-12 col-xs-12" align="left">
+                                <button type="submit" name="add" class="btn btn-info">{{action}}</button>
+                                <a href="/items/items_master_list/"><span class="btn btn-info"><i class="material-icons" data-toggle="tooltip" data-original-title="{{ButtonBack}}">Back</i></span></a></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
+

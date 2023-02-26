@@ -1,0 +1,106 @@
+{% include "header.html" %}
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#allitems").change(function() {
+			var allitems = $(this).val();
+			var dataString = "allitems=" + allitems;
+
+			$.ajax({
+				type: "POST",
+				url: "current_stock",
+				data: dataString,
+				success: function(result) {
+					$("#myTable").html(result);
+				}
+			});
+
+		});
+	});
+</script>
+
+<body>
+    <div class="container">
+        <div class="row col-md-10 col-md-offset-2 custyle">
+            <div class="card-body">
+                {{error_msg | safe}}
+                <form method="POST">
+                    {% csrf_token %}
+                
+                    <div class="content pb-0">
+                        <div class="orders">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title-wrap bar-success text-center">
+                                                <div class="card-title"><strong>Stock Report</strong></div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="card-body">
+                                            <div class="card-block">
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-body">
+                                                                <div class="form-group">
+                                                                    <label>Date From :</label>
+                                                                    <input type="date" name="txtFromDate" required id="txtFromDate" required class="form-control" value="{{date_from|date:'d-m-Y'}}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-body">
+                                                                <div class="form-group">
+                                                                    <label>Date Upto :</label>
+                                                                    <input type="date" name="txtToDate" required id="txtToDate" required class="form-control" value="{{date_upto|date:'d-m-Y'}}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </br>
+                                                        <div class="col-md-4">
+                                                            <div class="form-body">
+                                                            <button type="submit" name="search" id="search" class="btn btn-success">Search</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <table class="table table-responsive-md text-center border=1" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Item Name</th>
+                                                            <th>Purchase Quantity</th>
+                                                            <th>Sale Quantity </th>
+                                                            <th>Stock Item</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for k in res %}
+                                                        <tr>
+                                                            <td>{{forloop.counter}}</td>
+                                                            <td>{{k.item_name}}</td>
+                                                            <td>{{k.purchase_qty }}</td>
+                                                            <td>{{k.sale_qty}}</td>
+                                                            <td>{{k.current_stock}}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

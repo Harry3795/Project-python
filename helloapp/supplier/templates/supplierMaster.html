@@ -1,0 +1,68 @@
+{% include "header.html" %}
+
+<body>
+    <div class="container">
+        <div class="row col-md-10 col-md-offset-2 custyle">
+            <div class="card-body">
+                <form name="form1"  method="POST" id="FORMNAME1">
+                    {% csrf_token %}
+                
+                    <div class="row" style="padding:10px;">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label id="{{forms.supplier_name.id_for_label}}"> <b>{{forms.supplier_name.label}}<i class="star"> *</i></b> </label></br>
+                                {{forms.supplier_name}}
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group"><label id="{{forms.mobile.id_for_label}}"><strong><b>Mobile Number <i class="star"> *</i></b></strong></label></br>
+                                {{forms.mobile}}
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group"><label><strong><b>Address <i class="star"> *</i></b></strong></label></br>
+                                {{forms.address}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding:10px;">
+                        <div class="col-lg-4">
+                            <div class="form-group"><label><strong><b>City <i class="star"> *</i></b></strong></label></br>
+                                {{forms.city}}
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group"><label><strong><b>State <i class="star"> *</i></b></strong></label></br>
+                                {{forms.state}}
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group"><label><strong><b>Pincode <i class="star"> *</i></b></strong></label></br>
+                                {{forms.pincode}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding:10px;">
+                        <div class="col-md-12 col-sm-12 col-xs-12" align="left">
+                            <button type="submit" name="add" class="btn btn-info">{{action}}</button>
+                            <a href="/supplier/supplier_master_list/"><span class="btn btn-info"><i class="material-icons" data-toggle="tooltip" data-original-title="{{ButtonBack}}">Back</i></span></a></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    
+    function isNumber(evt) {
+        //alert();
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+ 
+</script>
